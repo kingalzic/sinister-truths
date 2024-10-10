@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinister Truths</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=ATou7SlrFwSytRtphSPj4r4_BITTUUW1s1o5kXyWi7xnvmQ5KpOKvF-Xq0dYkZF7TslECaI93RKqv9oh"></script> <!-- Replace YOUR_CLIENT_ID with your actual PayPal Client ID -->
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="Sinister_Truths_Logo.png" alt="Sinister Truths Logo" class="logo">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#games">Games</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>Sinister Truths</h1>
+            <p>Unleash your destiny in a world where choices shape reality</p>
+            <a href="#" class="cta-button">Play Now</a>
+        </section>
+
+        <section class="features">
+            <div class="feature">
+                <h2>Immersive Gameplay</h2>
+                <p>Experience a rich, dynamic world where your decisions matter.</p>
+                <img src="placeholder.png" alt="Immersive Gameplay" class="feature-image">
+            </div>
+            
+            <div class="feature">
+                <h2>Moral Dilemmas</h2>
+                <p>Navigate complex scenarios that challenge your ethics and strategy.</p>
+                <img src="placeholder.png" alt="Moral Dilemmas" class="feature-image">
+            </div>
+            
+            <div class="feature">
+                <h2>Vibrant Community</h2>
+                <p>Join a passionate playerbase and share your experiences.</p>
+                <img src="placeholder.png" alt="Vibrant Community" class="feature-image">
+            </div>
+        </section>
+
+        <section class="payment">
+            <h2>Support Our Game</h2>
+            <p>Make a donation to help us improve Sinister Truths</p>
+            <div id="paypal-button-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sinister Truths. All rights reserved.</p>
+    </footer>
+
+    <script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return fetch('/create-order', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(orderData) {
+                    return orderData.id;
+                });
+            },
+            onApprove: function(data, actions) {
+                return fetch(`/capture-order/${data.orderID}`, {
+                    method: 'post'
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(orderData) {
+                    alert('Thank you for your donation!');
+                });
+            }
+        }).render('#paypal-button-container');
+    </script>
+</body>
+</html>
