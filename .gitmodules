@@ -1,0 +1,3 @@
+[submodule "sinister-truths"]
+    path = sinister-truths
+    url = https://your-repository-url.git
